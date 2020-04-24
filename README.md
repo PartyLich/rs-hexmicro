@@ -2,7 +2,7 @@ Hexagonal microservice example
 
 A simple URL shortener ported from Go. It's a nice supplement to books and articles like _Clean Architecture_ and in this case, the Rust Book (which I hadn't completed when wrote this).
 
-I had done some research about the server frameworks available, then didn't have my notes available when I actually had time to implement that portion. I probably wouldn't choose Warp again. The problems it seeks to solve aren't necessarily problems I've had, and the route composition style doesn't address any personal need.
+I had done some research about the server frameworks available, then didn't have my notes available when I actually had time to implement that portion. I probably wouldn't choose Warp again for this little use case. The problems it seeks to solve aren't necessarily problems I've had, and the route composition style isn't meaningfully exploited here.
 
 ### Building the docs
 

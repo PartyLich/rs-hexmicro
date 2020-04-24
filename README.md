@@ -29,3 +29,7 @@ cargo build
 ```
 
 then use GET and POST however you please (curl, postman, etc)
+
+### Contribute
+
+Contributions are welcome. File an issue or PR.

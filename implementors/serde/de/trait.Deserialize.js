@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["hex_microservice"] = [{"text":"impl&lt;'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.104/serde/de/trait.Deserialize.html\" title=\"trait serde::de::Deserialize\">Deserialize</a>&lt;'de&gt; for <a class=\"struct\" href=\"hex_microservice/short_url/struct.Redirect.html\" title=\"struct hex_microservice::short_url::Redirect\">Redirect</a>","synthetic":false,"types":["hex_microservice::short_url::model::Redirect"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["JsonSerializer","A concrete implementation of the `RedirectSerializer` interface that uses json as its protocol"],["MsgpackSerializer","A concrete implementation of the `RedirectSerializer` interface that uses MsgPack as its protocol"]]});

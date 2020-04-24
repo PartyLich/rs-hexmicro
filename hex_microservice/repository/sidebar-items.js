@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["MongoRepository","A Mongo backed `RedirectRepository` object"],["RedisRepository","A Redis backed `RedirectRepository` object"]]});

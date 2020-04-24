@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["RedirectErr","An enumeration of the possible error types the url shortener may produce."]]});

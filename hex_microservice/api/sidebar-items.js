@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Handler","A concrete implementation of the `RedirectHandler` interface"]],"trait":[["RedirectHandler","Provides methods for driving a url shortening service"]]});

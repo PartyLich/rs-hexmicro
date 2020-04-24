@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["hex_microservice"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"hex_microservice/short_url/error/enum.RedirectErr.html\" title=\"enum hex_microservice::short_url::error::RedirectErr\">RedirectErr</a>","synthetic":false,"types":["hex_microservice::short_url::error::RedirectErr"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

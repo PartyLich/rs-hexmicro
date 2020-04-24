@@ -70,7 +70,7 @@ impl RedirectHandler for Handler {
     fn get(&self, code: String) -> Box<dyn warp::Reply> {
         match self.redirect_service.find(&code) {
             Ok(redirect) => {
-                println!("redirect {}", redirect.url);
+                log::info!("redirect {}", redirect.url);
                 Box::new(warp::redirect(
                     redirect
                         .url
@@ -79,7 +79,7 @@ impl RedirectHandler for Handler {
                 ))
             }
             Err(e) => {
-                eprintln!("Failed to redirect for code {}: {}", code, e);
+                log::warn!("Failed to redirect for code {}:\n\t{}", code, e);
                 if e == RedirectErr::NotFound {
                     return Handler::reply_with(e);
                 }
@@ -94,7 +94,7 @@ impl RedirectHandler for Handler {
         {
             Ok(r) => r,
             Err(e) => {
-                eprintln!("redirect decode err: {}", e);
+                log::error!("redirect decode err: {}", e);
                 return server_err_reply();
             }
         };
@@ -102,7 +102,7 @@ impl RedirectHandler for Handler {
         let redirect = match self.redirect_service.store(&redirect) {
             Ok(r) => r,
             Err(e) => {
-                eprintln!("{}", e);
+                log::error!("{}", e);
                 match e {
                     RedirectErr::Invalid => return Handler::reply_with(e),
                     _ => return server_err_reply(),
@@ -113,7 +113,7 @@ impl RedirectHandler for Handler {
         let res_body = match Handler::serializer(&content_type).encode(&redirect) {
             Ok(b) => b,
             Err(e) => {
-                eprintln!("redirect encode error: {}", e);
+                log::error!("redirect encode error: {}", e);
                 return server_err_reply();
             }
         };

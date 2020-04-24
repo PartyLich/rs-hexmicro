@@ -58,8 +58,20 @@ fn test_service(service: &dyn RedirectService) {
     }
 }
 
+/// Initialize logging
+fn init_log(name: &str) {
+    if std::env::var("RUST_LOG").is_err() {
+        std::env::set_var("RUST_LOG", name);
+    }
+    pretty_env_logger::init();
+}
+
 #[tokio::main]
 async fn main() {
+    // start logging
+    const PACKAGE: &str = env!("CARGO_PKG_NAME");
+    init_log(PACKAGE);
+
     let repo = choose_repo();
     let service = short_url::Service::new(repo);
 
@@ -77,7 +89,7 @@ async fn main() {
         .and(warp::path::param())
         .and(warp::path::end())
         .map(move |code| {
-            println!("get handler\n\tcode: {}", code);
+            log::debug!("get handler received\n\tcode: {}", code);
             get_handler.lock().unwrap().get(code)
         });
     // POST /
@@ -88,16 +100,18 @@ async fn main() {
         .and(warp::body::content_length_limit(1024 * 32))
         .and(warp::body::bytes())
         .map(move |content_type, req_body| {
-            println!(
-                "post handler\n\tcontent_type: {} req_body: {:?}",
-                content_type, req_body
+            log::debug!(
+                "post handler received\n\tcontent_type: {} req_body: {:?}",
+                content_type,
+                req_body
             );
             post_handler.lock().unwrap().post(content_type, req_body)
         });
 
-    let api = get_code.or(post_code);
+    let log = warp::log(PACKAGE);
+    let api = get_code.or(post_code).with(log);
 
     // Start http server
-    println!("Starting server on port {}", port);
+    log::info!("Starting server on port {}", port);
     warp::serve(api).run((SERVER_IP, port)).await;
 }

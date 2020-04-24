@@ -5,13 +5,15 @@ use redis::Commands;
 use crate::short_url::{error::RedirectErr, Redirect, RedirectRepository};
 
 impl From<redis::RedisError> for RedirectErr {
-    fn from(_: redis::RedisError) -> RedirectErr {
+    fn from(e: redis::RedisError) -> RedirectErr {
+        log::error!("{}", e);
         RedirectErr::ServerErr
     }
 }
 
 impl From<std::num::ParseIntError> for RedirectErr {
-    fn from(_: std::num::ParseIntError) -> RedirectErr {
+    fn from(e: std::num::ParseIntError) -> RedirectErr {
+        log::error!("{}", e);
         RedirectErr::ServerErr
     }
 }
@@ -78,7 +80,7 @@ impl RedirectRepository for RedisRepository {
         let data: HashMap<String, String> = conn.hgetall(key)?;
         if data.len() == 0 {
             // redirect not found
-            eprintln!("Unable to find redirect for code: {}", code);
+            log::warn!("Unable to find redirect for code: {}", code);
             return Err(RedirectErr::NotFound);
         }
 

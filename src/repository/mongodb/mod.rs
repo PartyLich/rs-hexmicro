@@ -5,22 +5,22 @@ use std::error::Error;
 use crate::short_url::{error::RedirectErr, Redirect, RedirectRepository};
 
 impl From<mongodb::error::Error> for RedirectErr {
-    fn from(_err: mongodb::error::Error) -> RedirectErr {
-        eprint!("mongodb error {}", _err);
+    fn from(e: mongodb::error::Error) -> RedirectErr {
+        log::error!("mongodb error {}", e);
         RedirectErr::ServerErr
     }
 }
 
 impl From<bson::DecoderError> for RedirectErr {
-    fn from(_err: bson::DecoderError) -> RedirectErr {
-        eprint!("bson decode error {}", _err);
+    fn from(e: bson::DecoderError) -> RedirectErr {
+        log::error!("bson decode error {}", e);
         RedirectErr::ServerErr
     }
 }
 
 impl From<bson::EncoderError> for RedirectErr {
-    fn from(_err: bson::EncoderError) -> RedirectErr {
-        eprint!("bson encode error {}", _err);
+    fn from(e: bson::EncoderError) -> RedirectErr {
+        log::error!("bson encode error {}", e);
         RedirectErr::ServerErr
     }
 }
@@ -78,7 +78,7 @@ impl RedirectRepository for MongoRepository {
             collection.insert_one(doc, None)?;
             Ok(())
         } else {
-            eprintln!("Error converting BSON object to MongoDB document");
+            log::error!("Error converting BSON object to MongoDB document");
             return Err(RedirectErr::ServerErr);
         }
     }

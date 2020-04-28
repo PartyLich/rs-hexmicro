@@ -16,7 +16,7 @@ fn http_port() -> u16 {
 /// Create repository instance according to environment variable. Default to MongoDB
 fn choose_repo() -> Box<dyn short_url::RedirectRepository + Send> {
     let db = std::env::var("URL_DB").expect("URL_DB var must be provided");
-    println!("db: {}", std::env::var("URL_DB").unwrap());
+    log::info!("db: {}", std::env::var("URL_DB").unwrap());
 
     match db.as_str() {
         "redis" => {
@@ -40,20 +40,20 @@ fn test_service(service: &dyn RedirectService) {
         created_at: 0,
         url: String::from("https://www.google.com"),
     };
-    println!("{:?}", x);
+    log::debug!("{:?}", x);
 
     if let Err(e) = service.store(&x) {
         panic!(e)
     };
 
-    println!("Stored test redirect {:?}", x);
+    log::debug!("Stored test redirect {:?}", x);
 
     match service.find(TEST_CODE) {
         Ok(r) => {
-            println!("found redirect: {:?}", r);
+            log::debug!("found redirect: {:?}", r);
         }
         Err(e) => {
-            println!("Unable to find redirect with code {}:\n\t {}", TEST_CODE, e);
+            log::error!("Unable to find redirect with code {}:\n\t {}", TEST_CODE, e);
         }
     }
 }
